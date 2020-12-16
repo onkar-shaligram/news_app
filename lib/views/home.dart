@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/helper/data.dart';
+import 'package:news_app/helper/loader.dart';
 import 'package:news_app/helper/news.dart';
 import 'package:news_app/model/article.dart';
 import 'package:news_app/model/category.dart';
@@ -18,8 +19,11 @@ class _HomeState extends State<Home> {
 
   News news = News();
 
+  bool loading = true;
+
   @override
   void initState() {
+    loading = true;
     categories = getCategoryData();
     getAndSetNews();
     super.initState();
@@ -28,49 +32,53 @@ class _HomeState extends State<Home> {
   getAndSetNews() async {
     await news.getNewsHeadLine();
     articles = news.articles;
-    setState(() {});
+    setState(() {
+      loading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('News App'),
-        ),
-        body: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              children: [
-                Container(
-                  height: 200,
-                  child: ListView.builder(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    itemCount: categories.length,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return CategoryTile(
-                          categories[index].imgUrl, categories[index].label);
-                    },
-                  ),
-                ),
-                ListView.builder(
-                    itemCount: articles.length,
-                    shrinkWrap: true,
-                    physics: ClampingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      //return Text(articles[index].title);
-                      return NewsTile(
-                        title: articles[index].title,
-                        description: articles[index].description,
-                        imageUrl: articles[index].urlToImage,
-                        url: articles[index].url,
-                      );
-                    })
-              ],
+    return loading
+        ? Loading()
+        : Scaffold(
+            appBar: AppBar(
+              title: Text('News App'),
             ),
-          ),
-        ));
+            body: SingleChildScrollView(
+              child: Container(
+                child: Column(
+                  children: [
+                    Container(
+                      height: 200,
+                      child: ListView.builder(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        itemCount: categories.length,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return CategoryTile(categories[index].imgUrl,
+                              categories[index].label);
+                        },
+                      ),
+                    ),
+                    ListView.builder(
+                        itemCount: articles.length,
+                        shrinkWrap: true,
+                        physics: ClampingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          //return Text(articles[index].title);
+                          return NewsTile(
+                            title: articles[index].title,
+                            description: articles[index].description,
+                            imageUrl: articles[index].urlToImage,
+                            url: articles[index].url,
+                          );
+                        })
+                  ],
+                ),
+              ),
+            ));
   }
 }
 

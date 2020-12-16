@@ -31,6 +31,7 @@ dependencies:
   http: any
   webview_flutter: any
   cached_network_image: any
+  flutter_spinkit: any
 
 dev_dependencies:
   flutter_test:
