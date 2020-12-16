@@ -5,6 +5,7 @@ List<Category> getCategoryData() {
 
   List<Category> categories = List<Category> ();
 
+//1
   Category category = Category();
   category.imgUrl =
       "https://images.unsplash.com/photo-1507679799987-c73779587ccf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1502&q=80";
