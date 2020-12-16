@@ -141,40 +141,55 @@ class NewsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => ArticleView(url)));
-      },
-      child: Container(
-        margin: EdgeInsets.only(bottom: 18),
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.network(
-                imageUrl,
-                height: 180,
-                width: MediaQuery.of(context).size.width,
-                fit: BoxFit.cover,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+              child: Card(
+          color: Colors.white70,
+          elevation: 10,
+          shadowColor: Colors.blueAccent,
+          //margin: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
+              child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => ArticleView(url)));
+            },
+            child: Container(
+              margin: EdgeInsets.only(bottom: 18),
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.network(
+                        imageUrl,
+                        height: 180,
+                        width: MediaQuery.of(context).size.width,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    title,
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    description,
+                    style: TextStyle(fontSize: 13),
+                  ),
+                ],
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              title,
-              style: TextStyle(fontSize: 20),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              description,
-              style: TextStyle(fontSize: 13),
-            ),
-          ],
+          ),
         ),
       ),
     );
