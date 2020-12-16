@@ -9,7 +9,7 @@ class News {
   List<Article> articles = List<Article> ();
 
   Future <void> getNewsHeadLine() async {
-    String url = "http://newsapi.org/v2/top-headlines?country=in&apiKey=$ApiKey";
+    String url = "http://newsapi.org/v2/top-headlines?country=in&apiKey=$apiKey";
 
     var response = await http.get(url);
     //print(response);
@@ -37,7 +37,7 @@ class News {
 
 
   Future <void> getNewsByCategory(String category) async {
-    String url = "http://newsapi.org/v2/top-headlines?category=$category&country=in&category=business&apiKey=$ApiKey";
+    String url = "http://newsapi.org/v2/top-headlines?category=$category&country=in&category=business&apiKey=$apiKey";
 
     var response = await http.get(url);
     //print(response);
