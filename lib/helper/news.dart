@@ -6,10 +6,10 @@ import 'package:http/http.dart' as http;
 
 class News {
 
-  List<Article> articles = List<Article> ();
+  List<Article> articles = <Article>[];
 
   Future <void> getNewsHeadLine() async {
-    String url = "http://newsapi.org/v2/top-headlines?country=in&apiKey=$apiKey";
+    String url = "https://newsapi.org/v2/top-headlines?country=in&apiKey=$apiKey";
 
     var response = await http.get(url);
     //print(response);

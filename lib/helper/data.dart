@@ -3,7 +3,8 @@ import 'package:news_app/model/category.dart';
 
 List<Category> getCategoryData() {
 
-  List<Category> categories = List<Category> ();
+  //List<Category> categories = List<Category> ();
+  List<Category> categories = <Category>[];
 
 //1
   Category category = Category();

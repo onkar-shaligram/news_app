@@ -14,8 +14,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<Category> categories = List<Category>();
-  List<Article> articles = List<Article>();
+  // List<Category> categories = List<Category>();
+  // List<Article> articles = List<Article>();
+  List<Category> categories = <Category>[];
+  List<Article> articles = <Article>[];
 
   News news = News();
 
@@ -150,7 +152,7 @@ class NewsTile extends StatelessWidget {
           elevation: 10,
           shadowColor: Colors.blueAccent,
           //margin: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
-              child: GestureDetector(
+              child: InkWell(
             onTap: () {
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => ArticleView(url)));

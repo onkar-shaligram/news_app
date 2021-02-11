@@ -16,7 +16,8 @@ class CategoryScreen extends StatefulWidget {
 
 class _CategoryScreenState extends State<CategoryScreen> {
 
-  List<Article> articles = List<Article> ();
+  //List<Article> articles = List<Article> ();
+  List<Article> articles = <Article>[];
 
    News news = News();
 
