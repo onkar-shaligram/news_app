@@ -8,6 +8,8 @@ import 'package:news_app/model/category.dart';
 import 'package:news_app/views/articleview.dart';
 import 'package:news_app/views/category.dart';
 
+import 'News Pages/forYou.dart';
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -22,6 +24,7 @@ class _HomeState extends State<Home> {
   News news = News();
 
   bool loading = true;
+  var cindex = 0;
 
   @override
   void initState() {
@@ -45,42 +48,105 @@ class _HomeState extends State<Home> {
         ? Loading()
         : Scaffold(
             appBar: AppBar(
-              title: Text('News App'),
-            ),
+                backgroundColor: Colors.white,
+                elevation: 0,
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Update",
+                      style: TextStyle(color: Colors.brown),
+                    ),
+                    Text("  "),
+                    Text(
+                      "Me",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ],
+                )),
             body: SingleChildScrollView(
               child: Container(
                 child: Column(
                   children: [
-                    Container(
-                      height: 200,
-                      child: ListView.builder(
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        itemCount: categories.length,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return CategoryTile(categories[index].imgUrl,
-                              categories[index].label);
-                        },
-                      ),
-                    ),
+                    // Container(
+                    //   height: 200,
+                    //   child: ListView.builder(
+                    //     padding: EdgeInsets.symmetric(horizontal: 16),
+                    //     itemCount: categories.length,
+                    //     shrinkWrap: true,
+                    //     scrollDirection: Axis.horizontal,
+                    //     itemBuilder: (context, index) {
+                    //       return CategoryTile(categories[index].imgUrl,
+                    //           categories[index].label);
+                    //     },
+                    //   ),
+                    // ),
                     ListView.builder(
                         itemCount: articles.length,
                         shrinkWrap: true,
                         physics: ClampingScrollPhysics(),
                         itemBuilder: (context, index) {
                           //return Text(articles[index].title);
-                          return NewsTile(
+                          return NewsTileForYou(
                             title: articles[index].title,
                             description: articles[index].description,
                             imageUrl: articles[index].urlToImage,
                             url: articles[index].url,
+                            index: index,
                           );
                         })
                   ],
                 ),
               ),
-            ));
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+                type: BottomNavigationBarType.fixed,
+                showSelectedLabels: true,
+                showUnselectedLabels: false,
+                currentIndex: cindex,
+                items: [
+                  BottomNavigationBarItem(
+                    icon: InkWell(
+                        onTap: () {
+                          setState(() {
+                            cindex = 0;
+                          });
+                        },
+                        child: Icon(Icons.person)),
+                    label: "For You",
+                  ),
+                  BottomNavigationBarItem(
+                    icon: InkWell(
+                        onTap: () {
+                          setState(() {
+                            cindex = 1;
+                          });
+                        },
+                        child: Icon(Icons.add_circle_outline)),
+                    label: "Headlines",
+                  ),
+                  BottomNavigationBarItem(
+                    icon: InkWell(
+                        onTap: () {
+                          setState(() {
+                            cindex = 2;
+                          });
+                        },
+                        child: Icon(Icons.star_border_outlined)),
+                    label: "Favorites",
+                  ),
+                  BottomNavigationBarItem(
+                    icon: InkWell(
+                        onTap: () {
+                          setState(() {
+                            cindex = 3;
+                          });
+                        },
+                        child: Icon(Icons.fiber_new_sharp)),
+                    label: "Newsstand",
+                  ),
+                ]),
+          );
   }
 }
 
@@ -102,12 +168,6 @@ class CategoryTile extends StatelessWidget {
           child: Container(
             child: Stack(
               children: [
-                // Image.network(
-                // imgUrl,
-                // height: 200,
-                // width: 120,
-                // fit: BoxFit.cover,
-                // ),
                 CachedNetworkImage(
                   imageUrl: imgUrl,
                   height: 200,
@@ -136,64 +196,3 @@ class CategoryTile extends StatelessWidget {
   }
 }
 
-class NewsTile extends StatelessWidget {
-  final String imageUrl, title, description, url;
-
-  NewsTile({this.imageUrl, this.title, this.description, this.url});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(15),
-              child: Card(
-          color: Colors.white70,
-          elevation: 10,
-          shadowColor: Colors.blueAccent,
-          //margin: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
-              child: InkWell(
-            onTap: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => ArticleView(url)));
-            },
-            child: Container(
-              margin: EdgeInsets.only(bottom: 18),
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.network(
-                        imageUrl,
-                        height: 180,
-                        width: MediaQuery.of(context).size.width,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    title,
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    description,
-                    style: TextStyle(fontSize: 13),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}

@@ -3,6 +3,8 @@ import 'package:news_app/helper/news.dart';
 import 'package:news_app/model/article.dart';
 import 'package:news_app/views/home.dart';
 
+import 'News Pages/forYou.dart';
+
 
 class CategoryScreen extends StatefulWidget {
   
@@ -47,7 +49,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 shrinkWrap: true,
                 physics: ClampingScrollPhysics(),
                 itemBuilder: (context, index) {
-                  return NewsTile(
+                  return NewsTileForYou(
                     title: articles[index].title,
                     description: articles[index].description,
                     imageUrl : articles[index].urlToImage,
